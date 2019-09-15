@@ -10,7 +10,7 @@ const renderReceipe = receipe => {
                 <img src="${receipe.image_url}" alt="${receipe.title}">
             </figure>
             <div class="results__data">
-                <h4 class="results__name">${receipe.title}</h4>
+                <h4 class="results__name">${limitReceipeTitle(receipe.title)}</h4>
                 <p class="results__author">${receipe.publisher}</p>
             </div>
         </a>
@@ -29,3 +29,18 @@ export const clearInput = () => {
 export const clearResList = () => {
     elements.searchResList.innerHTML='';
 } 
+
+const limitReceipeTitle = (receipeTitle, limit=17)=>{
+    const receipeTitleArray = receipeTitle.split(" ");
+    const newTitle = [];
+    if(receipeTitle.length > limit){
+        receipeTitleArray.reduce((acc, cur)=>{
+            if(acc + cur.length <= limit){
+                newTitle.push(cur);
+                return acc + cur.length
+            }
+        }, 0)
+        return `${newTitle.join(" ")}...`;
+    }
+    else return receipeTitle;
+}
